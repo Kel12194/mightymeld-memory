@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import confetti from "canvas-confetti";
 import * as icons from "react-icons/gi";
 import { Tile } from "./Tile";
@@ -36,6 +36,21 @@ export function PlayScreen({ end }) {
   const [tiles, setTiles] = useState(null);
   const [tryCount, setTryCount] = useState(0);
   const [bestCount,setBestCount] = useState(0);
+
+  useEffect(() => {
+    setBestCount(parseInt(localStorage.getItem(BEST_KEY)) || 0);
+  },[])
+
+  const BEST_KEY = "bestKey";
+
+  function saveLocal(number) {
+    if(number == 0) return;
+    const storedNumber = parseInt(localStorage.getItem(BEST_KEY)) || 0;
+
+    if(number < storedNumber || storedNumber === 0){
+      localStorage.setItem(BEST_KEY,number)
+    }
+  }
   
 
   const getTiles = (tileCount) => {
@@ -99,6 +114,7 @@ export function PlayScreen({ end }) {
 
           // If all tiles are matched, the game is over.
           if (newTiles.every((tile) => tile.state === "matched")) {
+            saveLocal(tryCount)
             setTimeout(end, 0);
           }
 
