@@ -18,10 +18,16 @@ export const possibleTileContents = [
 
 export function StartScreen({ start }) {
   return (
-    <div>
-      <button onClick={start} className="bg-gray-400 text-white p-3">
+    <div className="flex items-center justify-center h-screen">
+      <div className="rounded-2xl w-96 h-96 bg-pink-100 flex flex-col items-center justify-center p-10 text-pink-500 ">
+        <h2 className="font-bold text-4xl mt-8">Memory</h2>
+        <div className="font-medium text-lg mt-4 mb-10">
+          Flip over tiles looking for pairs
+        </div>
+        <button onClick={start} style={{width: '150px'}} className="hover:from-pink-500 hover:to-pink:500 font-semibold bg-gray-400 text-white p-3 bg-gradient-to-b from-pink-400 to-pink-600 text-white rounded-3xl text-2xl cursor-pointer py-2 px-5">
         Play
       </button>
+      </div>
     </div>
   );
 }
@@ -29,6 +35,8 @@ export function StartScreen({ start }) {
 export function PlayScreen({ end }) {
   const [tiles, setTiles] = useState(null);
   const [tryCount, setTryCount] = useState(0);
+  const [bestCount,setBestCount] = useState(0);
+  
 
   const getTiles = (tileCount) => {
     // Throw error if count is not even.
@@ -109,12 +117,28 @@ export function PlayScreen({ end }) {
 
   return (
     <>
-      <div>
-        {getTiles(6).map((tile, i) => (
-          <Tile key={i} flip={() => flip(i)} {...tile} />
-        ))}
+      <div className="flex flex-col justify-center items-center h-screen">
+        <div className="flex justify-between">
+          <span className="text-green-500 mb-8 text-lg font-semibold">Best score &nbsp;
+            <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0. rounded" style={{ fontSize: '20px'}}>
+              {bestCount}
+            </span>
+          </span>
+
+          <span className="text-blue-500 mb-8 text-lg font-semibold">Tries&nbsp;
+          <span className="bg-blue-100 text-blue-800 text-sx font-medium me-2 px-2.5 rounded" style={{color: '#4d46e4',fontSize: '20px',backgroundColor:'#c3d3fe'}}>
+            {tryCount}
+          </span>
+          </span>
+        </div>
+
+        <div className="w-80 h-80 rounded-2xl bg-blue-50" style={{height:"400px",width: '400px'}}>
+          <div className="grid grid-cols-4 place-items-center p-2 w-full h-full">
+            {getTiles(16).map((tile,i) => (<Tile key={i} flip={() => flip(i)} {...tile}/>))}
+          </div>
+        </div>
       </div>
-      {tryCount}
+      
     </>
   );
 }

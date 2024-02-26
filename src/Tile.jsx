@@ -9,13 +9,11 @@ export function Tile({ content: Content, flip, state }) {
       );
     case "flipped":
       return (
-        <Front className="inline-block h-8 w-8 bg-green-500">
+        <Front className="h-8 w-8 bg-green-500 flex justify-center items-center">
           <Content
             style={{
-              display: "inline-block",
-              width: "100%",
-              height: "100%",
-              verticalAlign: "top",
+              width: "75%",
+              height: "75%",
             }}
           />
         </Front>
@@ -28,7 +26,7 @@ export function Tile({ content: Content, flip, state }) {
               display: "inline-block",
               width: "100%",
               height: "100%",
-              verticalAlign: "top",
+              verticalAlign: "center",
             }}
           />
         </Matched>
@@ -40,16 +38,16 @@ export function Tile({ content: Content, flip, state }) {
 
 function Back({ className, flip }) {
   return (
-    <div onClick={flip} className={className}>
-      ?
+    <div onClick={flip} className={className} style={{ backgroundColor: '#9fb5fc',borderRadius: '12px',width: '80px',height: '80px'}}>
+      
     </div>
   );
 }
 
 function Front({ className, children }) {
-  return <div className={className}>{children}</div>;
+  return <div className={className} style={{borderRadius: '12px',width: '80px',height: '80px',color: '#fff',backgroundColor: '#5f66f0',fontSize: '7px'}}>{children}</div>;
 }
 
 function Matched({ className, children }) {
-  return <div className={className}>{children}</div>;
+  return <div className={className} style={{borderRadius: '12px',width: '80px',height: '80px',color: '#c3d3fe'}}>{children}</div>;
 }
